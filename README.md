@@ -1,4 +1,4 @@
-# Beer/Win Fridge of Awesomeness
+# Beer/Wine Fridge of Awesomeness
 Tutorial: Beer/Wine Fridge of Awesomeness
 
 This is a hub for the Beer/Wine Fridge of Awesomeness tutuorial. 
