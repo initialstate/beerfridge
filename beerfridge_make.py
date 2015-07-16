@@ -13,7 +13,9 @@ import os
 WEIGHT_SAMPLES = 1500
 WEIGHT_BASE = 83.04
 WEIGHT_BOTTLE = 1.266
-BUCKET_NAME = "Beer Fridge"
+FRIDGE_GETTING_LOW = 32
+FRIDGE_EMPTY = 22
+BUCKET_NAME = ":beer: Beer Fridge"
 BUCKET_KEY = "INSERT_BUCKET_KEY_HERE"
 ACCESS_KEY = "INSERT_ACCESS_KEY_HERE"
 # ---------------------------------
@@ -58,7 +60,7 @@ class EventProcessor:
         if (self._doorStatus == True and event.doorStatus == False):
             self._takeMeasurement = True
             self._measureCnt = 0
-            self.streamer.log("Door", "Closed")
+            self.streamer.log(":door: Door", "Closed")
             self.streamer.flush()
             print "Door Closed"
             print "Starting measurement ..."
@@ -66,7 +68,7 @@ class EventProcessor:
         # Door is opened, ensure no measurement is being taken
         if (self._doorStatus == False and event.doorStatus == True):
             self._takeMeasurement = False
-            self.streamer.log("Door", "Open")
+            self.streamer.log(":door: Door", "Open")
             self.streamer.flush()
             print "Door Opened"
         if (self._takeMeasurement == True and event.totalWeight > 2):
@@ -81,13 +83,20 @@ class EventProcessor:
                 self.bottles = int(round(self._weightBottles / WEIGHT_BOTTLE))
                 self._measureCnt = 0
                 print str(self._weight) + " lbs total, " + str(self._weightBottles) + " lbs in bottles"
+                if self.bottles < FRIDGE_EMPTY:
+                    self.streamer.log("Status", ":scream:")
+                elif self.bottles < FRIDGE_GETTING_LOW:
+                    self.streamer.log("Status", ":worried:")
+                else:    
+                    self.streamer.log("Status", ":beers: :thumbsup:") 
+                self.streamer.flush()               
                 if (self.bottles != self._bottlesPrev) and (self.bottles >= 0):
-                    self.streamer.log("Bottles Present", self.bottles)
+                    self.streamer.log(":beer: Bottles Present", self.bottles)
                     self.streamer.flush()
                     if (self._bottlesPrev != -1) and (self._bottlesPrev > self.bottles):
                         for x in range(0, self._bottlesPrev-self.bottles):
                             print "Bottle removed"
-                            self.streamer.log("Bottle Removed", "1")
+                            self.streamer.log(":beers: Bottle Removed", ":beers:")
                             self.streamer.flush()
                     self._bottlesPrev = self.bottles
                 print str(self.bottles) + " Bottles"
