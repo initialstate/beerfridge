@@ -1,4 +1,7 @@
 # Beer/Wine Fridge of Awesomeness
+
+![Project](https://github.com/InitialState/beerfridge/wiki/img/project_overview.jpg)
+
 This is a hub for the Beer/Wine Fridge of Awesomeness tutuorial. 
 
 Here you will find code materials for the tutorial as well as the tutorial itself in the [wiki](https://github.com/InitialState/beerfridge/wiki).
