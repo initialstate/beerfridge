@@ -120,7 +120,7 @@ class EventProcessor:
             if self._measureCnt == WEIGHT_SAMPLES:
                 self._sum = 0
                 for x in range(0, WEIGHT_SAMPLES-1):
-                    self._sum += event.totalWeight*2.20462
+                    self._sum += self._events[x]
                 self._weight = self._sum/WEIGHT_SAMPLES
                 self._weightBottles = self._weight - WEIGHT_BASE
                 self.bottles = int(round(self._weightBottles / WEIGHT_BOTTLE))
